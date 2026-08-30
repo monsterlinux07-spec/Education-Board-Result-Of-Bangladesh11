@@ -5,45 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Result View</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 900px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
-        h2 { color: #2c3e50; }
-        .error-box { background-color: #ffebee; border: 1px solid #ffcdd2; color: #c62828; padding: 20px; border-radius: 6px; font-size: 18px; font-weight: bold; margin: 20px 0; }
-        .result-card { width: 100%; background: #fafafa; border: 1px solid #ddd; border-radius: 6px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .result-card img { max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 4px; }
-        .btn-group { margin-top: 20px; display: flex; justify-content: center; gap: 15px; }
-        .action-btn { padding: 10px 20px; background-color: #27ae60; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; border: none; cursor: pointer; }
-        .back-btn { background-color: #2980b9; }
-        @media print { .btn-group { display: none; } }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 800px;
+            margin: 30px auto;
+            background: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #008000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h2 {
+            margin: 0;
+            color: #008000;
+        }
+        .info {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .result-section {
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 15px;
+            background: #fafafa;
+            border-radius: 5px;
+        }
+        .result-section h3 {
+            margin-top: 0;
+            color: #444;
+            font-size: 16px;
+        }
+        .result-section img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btn {
+            background-color: #008000;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+        .btn-back {
+            background-color: #0066cc;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+
+<div class="container">
+    <div class="header">
         <h2>Examination Result Publication</h2>
-        
-        {% if documents %}
-            <div style="font-size: 16px; color: #34495e; margin-bottom: 20px; font-weight: bold;">
-                Exam: {{ exam }} | Board: {{ board }} | Year: {{ year }} | Roll: {{ roll }}
-            </div>
-
-            {% for doc in documents %}
-            <div class="result-card">
-                <h4>{{ doc.title }}</h4>
-                <img src="{{ url_for('static', filename=doc.file) }}" alt="{{ doc.title }}">
-            </div>
-            {% endfor %}
-        {% else %}
-            <div class="error-box">
-                No result found! Please check your Examination, Board, Year, and Roll Number and try again.
-            </div>
-        {% endif %}
-
-        <div class="btn-group">
-            {% if documents %}
-            <button onclick="window.print()" class="action-btn">Download / Print PDF</button>
-            {% endif %}
-            <a href="/" class="action-btn back-btn">Search Again</a>
-        </div>
     </div>
+
+    <div class="info">
+        Exam: {{ exam }} | Board: {{ board }} | Year: {{ year }} | Roll: {{ roll }}
+    </div>
+
+    <!-- Academic Certificate -->
+    <div class="result-section">
+        <h3>Academic Certificate</h3>
+        <!-- আপনার static ফোল্ডারের আসল সার্টিফিকেট ছবি -->
+        <img src="{{ url_for('static', filename='certificate.png') }}" alt="Academic Certificate">
+    </div>
+
+    <!-- Academic Marksheet -->
+    <div class="result-section">
+        <h3>Academic Marksheet</h3>
+        <!-- আপনার static ফোল্ডারের আসল মার্কশিট ছবি -->
+        <img src="{{ url_for('static', filename='marksheet.png') }}" alt="Academic Marksheet">
+    </div>
+
+    <div class="btn-container">
+        <button class="btn" onclick="window.print()">Download / Print PDF</button>
+        <a href="/" class="btn btn-back">Search Again</a>
+    </div>
+</div>
+
 </body>
 </html>
