@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+# রেজাল্ট ও ডকুমেন্টের ডাটাবেজ
 results_db = {
     "325531": {
         "reg": "1310384293/2019-20",
@@ -48,20 +49,13 @@ def result():
         roll = request.args.get('roll', '').strip()
         reg = request.args.get('reg', '').strip()
     
-    documents = None
-    exam = ""
-    year = ""
-    board = ""
+    student_data = None
     
-    # শুধু রোল নম্বর ডাটাবেজে থাকলেই সার্টিফিকেট শো করবে (রেজিস্ট্রেশন নম্বর কন্ডিশন তুলে দেওয়া হয়েছে)
+    # ইনপুট করা রোল অনুযায়ী ডাটা খোঁজা
     if roll in results_db:
         student_data = results_db[roll]
-        documents = student_data["documents"]
-        exam = student_data["exam"]
-        year = student_data["year"]
-        board = student_data["board"]
 
-    return render_template('result.html', roll=roll, reg=reg, exam=exam, year=year, board=board, documents=documents)
+    return render_template('result.html', roll=roll, reg=reg, student=student_data)
 
 if __name__ == '__main__':
     app.run(debug=True)

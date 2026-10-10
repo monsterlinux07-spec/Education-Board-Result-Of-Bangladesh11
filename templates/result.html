@@ -78,6 +78,12 @@
         .btn:hover {
             opacity: 0.9;
         }
+        .not-found {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -87,23 +93,24 @@
         <h2>Examination Result Publication</h2>
     </div>
 
-    <div class="info">
-        Exam: {{ exam }} | Board: {{ board }} | Year: {{ year }} | Roll: {{ roll }}
-    </div>
+    {% if documents %}
+        <div class="info">
+            Exam: {{ exam }} | Board: {{ board }} | Year: {{ year }} | Roll: {{ roll }}
+        </div>
 
-    <!-- Academic Certificate -->
-    <div class="result-section">
-        <h3>Academic Certificate</h3>
-        <!-- আপনার static ফোল্ডারের আসল সার্টিফিকেট ছবি -->
-        <img src="{{ url_for('static', filename='certificate.png') }}" alt="Academic Certificate">
-    </div>
+        <!-- dynamic loop: specific image for each student/roll -->
+        {% for doc in documents %}
+            <div class="result-section">
+                <h3>{{ doc.title }}</h3>
+                <img src="{{ url_for('static', filename=doc.file) }}" alt="{{ doc.title }}">
+            </div>
+        {% endfor %}
 
-    <!-- Academic Marksheet -->
-    <div class="result-section">
-        <h3>Academic Marksheet</h3>
-        <!-- আপনার static ফোল্ডারের আসল মার্কশিট ছবি -->
-        <img src="{{ url_for('static', filename='marksheet.png') }}" alt="Academic Marksheet">
-    </div>
+    {% else %}
+        <div class="not-found">
+            <p>No result found for Roll: {{ roll }}</p>
+        </div>
+    {% endif %}
 
     <div class="btn-container">
         <button class="btn" onclick="window.print()">Download / Print PDF</button>
