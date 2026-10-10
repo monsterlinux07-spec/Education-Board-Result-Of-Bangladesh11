@@ -93,13 +93,13 @@
         <h2>Examination Result Publication</h2>
     </div>
 
-    {% if documents %}
+    {% if student %}
         <div class="info">
-            Exam: {{ exam }} | Board: {{ board }} | Year: {{ year }} | Roll: {{ roll }}
+            Exam: {{ student.exam }} | Board: {{ student.board }} | Year: {{ student.year }} | Roll: {{ roll }}
         </div>
 
-        <!-- dynamic loop: specific image for each student/roll -->
-        {% for doc in documents %}
+        <!-- dynamic loop: specific images for each student/roll -->
+        {% for doc in student.documents %}
             <div class="result-section">
                 <h3>{{ doc.title }}</h3>
                 <img src="{{ url_for('static', filename=doc.file) }}" alt="{{ doc.title }}">
